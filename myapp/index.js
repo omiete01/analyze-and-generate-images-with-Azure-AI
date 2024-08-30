@@ -25,6 +25,7 @@ async function analyzeImageFromUrl() {
     },
     queryParameters: {
         features: features
+        
     },
     contentType: 'application/json'
   });

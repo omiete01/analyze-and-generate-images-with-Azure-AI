@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { analyzeImage } from './azure-image-analysis';
 
 function App() {
   const [input, setInput] = useState('');
@@ -34,6 +35,40 @@ function App() {
         </div>
     )
 
+}
+
+<script type="azure-image-analysis.js">
+  import { analyzeImage } from "./app.js";
+  window.analyzeImageFromModule = analyzeImage;
+</script>
+
+function DisplayResult() {
+  
+  const iaResult = iaResult.body;
+
+  console.log(`Model Version: ${iaResult.modelVersion}`);
+  console.log(`Image Metadata: ${JSON.stringify(iaResult.metadata)}`);
+  if (iaResult.captionResult) {
+    console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
+  }
+  if (iaResult.denseCaptionsResult) {
+    iaResult.denseCaptionsResult.values.forEach(denseCaption => console.log(`Dense Caption: ${JSON.stringify(denseCaption)}`));
+  }
+  if (iaResult.objectsResult) {
+    iaResult.objectsResult.values.forEach(object => console.log(`Object: ${JSON.stringify(object)}`));
+  }
+  if (iaResult.peopleResult) {
+    iaResult.peopleResult.values.forEach(person => console.log(`Person: ${JSON.stringify(person)}`));
+  }
+  if (iaResult.readResult) {
+    iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
+  }
+  if (iaResult.smartCropsResult) {
+    iaResult.smartCropsResult.values.forEach(smartCrop => console.log(`Smart Crop: ${JSON.stringify(smartCrop)}`));
+  }
+  if (iaResult.tagsResult) {
+    iaResult.tagsResult.values.forEach(tag => console.log(`Tag: ${JSON.stringify(tag)}`));
+  }
 }
 
 
